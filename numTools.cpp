@@ -3,14 +3,14 @@
 //  Number Theory Tools
 //
 //  Created by Cameron Ball on 6/24/20.
+//  Refactored by Cameron Ball on 9/13/21.
 //  Copyright © 2020 Cameron Ball. All rights reserved.
 //
 
 #include "numTools.hpp"
 #include <iostream>
 
-bool isPrime(int n)
-{
+bool isPrime(int n) {
     if (n <= 3)
         return n > 1;
     else if (n % 2 == 0 || n % 3 == 0)
@@ -47,32 +47,43 @@ bool isPrime(int n)
 bool isCoprime(int a, int b) { return gcd(a, b) == 1; }
 
 
-void isDivisible(int n)
-{
-    for (int i = 1; i <= n; i++) {
-        if (n % i == 0) {
+void isDivisible(int n) {
+    for (int i = 1; i <= n; i++)
+        if (n % i == 0)
             std::cout << i << '\t';
-        }
-    }
 }
 
 
-void primeFactors(int n) // algorithm by Cameron Ball, written on 6/30/2020. 
-{
+// void primeFactors(int n) // algorithm by Cameron Ball, written on 6/30/2020.
+// {
+//     int i = 0;
+//     while (i <= n) {
+//         if (isPrime(i) == 0 || n % i != 0)
+//             i++;
+//         if (isPrime(i) && n % i == 0) {
+//             std::cout << i << '\t';
+//             n /= i;
+//         }
+//     }
+// }
+
+void primeFactors(int n) { // above algorithm refactored here
     int i = 0;
-    while (i <= n) {
-        if (isPrime(i) == 0 || n % i != 0)
-            i++;
+    while (i <= n)
         if (isPrime(i) && n % i == 0) {
             std::cout << i << '\t';
             n /= i;
-        }
-    }
+        } else i++;
+        /*
+         Noted that by DeMorgan's Law, I was *explicitly* checking
+         for !(isPrime(i) && n % i == 0) 1st, then the true condition 2nd.
+         By simply using an else statement, this cuts the calls to
+         isPrime() in half, significantly improving speed of algorithm.
+        */
 }
 
 
-int gcd(int a, int b)
-{
+int gcd(int a, int b) {
     int remainder;
     while (b != 0) {
         remainder = b;
@@ -99,13 +110,11 @@ int totient(int n)
     int count = 0;
     if (n == 1)
         return 1;
-    else {
-        for (int i = 1; i < n; i++) {
-            if (isCoprime(n, i)) {
+    else
+        for (int i = 1; i < n; i++)
+            if (isCoprime(n, i))
                 count++;
-            }
-        }
-    } return count;
+    return count;
     
     /*
      reference: translated from Python code on https://www.w3resource.com/python-exercises/basic/python-basic-1-exercise-120.php

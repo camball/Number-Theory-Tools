@@ -3,11 +3,14 @@
 //  Number Theory Tools
 //
 //  Created by Cameron Ball on 6/24/20.
+//  Refactored by Cameron Ball on 9/13/21.
 //  Copyright © 2020 Cameron Ball. All rights reserved.
 //
 
 #include <iostream>
 #include "funcsForMain.hpp"
+
+using std::cout;
 
 int main() {
     
@@ -15,12 +18,14 @@ int main() {
     
     do
     {
-        std::cout << "Which programme would you like to run? ['M' for menu]\n";
-        std::cout << " > ";
+        cout << "Which programme would you like to run? ['M' for menu]\n";
+        cout << " > ";
+        std::cin.clear();
+        input = '\0';
         std::cin >> input;
-        std::cout << '\n';
+        cout << '\n';
         
-        if (isalpha(input) == true)
+        if (isalpha(input))
         {
             switch (tolower(input)) {
                 case 'p':
@@ -42,14 +47,14 @@ int main() {
                     showMenu();
                     break;
                 case 'q':
-                    std::cout << "Goodbye!" << std::endl;
+                    cout << "Goodbye!" << std::endl;
                     break;
                default:
-                   std::cout << "Invalid Input. The menu can be displayed with [M].\n\n";
+                   cout << "Invalid Input. The menu can be displayed with [M].\n\n";
                    break;
             }
         } else {
-            std::cout << "Invalid Input. The menu can be displayed with [M].\n\n";
+            cout << "Invalid Input. The menu can be displayed with [M].\n\n";
             std::cin.ignore(10);
         }
     } while (input != 'q');
